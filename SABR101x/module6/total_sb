@@ -1,0 +1,9 @@
+# SABR101x - Sabermetrics 101 on edX
+# Andy Andres and Morris Greenberg - Boston University 
+# SELECT yearID, HBP, SF from Teams WHERE YearID >= 1955
+
+SELECT teamID, yearID, SUM(SF) AS TotalSF
+FROM Batting
+WHERE yearID > 1954
+GROUP BY teamID, yearID
+ORDER BY yearID;
