@@ -59,3 +59,39 @@ hist(USDA$VitaminC, xlab = 'Vitamin C (mg)', main='Histogram of Vitamin C Levels
 
 # Boxplot
 boxplot(USDA$Sugar, main='Boxplot of Sugar Levels', ylab='Sugar (g)')
+
+# 
+USDA$Sodium[1] > mean(USDA$Sodium, na.rm=TRUE)
+USDA$Sodium[50] > mean(USDA$Sodium, na.rm=TRUE)
+
+HighSodium <- USDA$Sodium > mean(USDA$Sodium, na.rm=TRUE)
+str(HighSodium)
+
+# Change Logical to numeric
+HighSodium <- as.numeric(USDA$Sodium > mean(USDA$Sodium, na.rm=TRUE))
+str(HighSodium)
+
+# Add dataframe to original dataframe
+USDA$HighSodium <- HighSodium
+str(USDA)
+
+# Same way in Protein, Fat, Carbohydrate
+USDA$HighProtein <- as.numeric(USDA$Protein > mean(USDA$Protein, na.rm=TRUE))
+USDA$HighFat <- as.numeric(USDA$TotalFat > mean(USDA$TotalFat, na.rm=TRUE))
+USDA$HighCarbs <- as.numeric(USDA$Carbohydrate > mean(USDA$Carbohydrate, na.rm=TRUE))
+str(USDA)
+
+# Table
+table(USDA$HighSodium)
+
+# Table with multiple input
+table(USDA$HighSodium, USDA$HighFat)
+
+# tapply function to compute the average amount among groups
+tapply(USDA$Iron, USDA$HighProtein, mean, na.rm=TRUE)
+
+# tapply function to compute max
+tapply(USDA$VitaminC, USDA$HighCarbs, max, na.rm=TRUE)
+
+# tapply function to compute summary
+tapply(USDA$VitaminC, USDA$HighCarbs, summary, na.rm=TRUE)
