@@ -40,3 +40,22 @@ summary(USDA$Sodium)
 
 # Standard Deviation of Sodium level (Remove NA Values)
 sd(USDA$Sodium, na.rm=TRUE)
+
+# Plot 
+plot(USDA$Protein, USDA$TotalFat)
+
+# Plot with label modification
+plot(USDA$Protein, USDA$TotalFat, xlab='Protein', ylab='Fat', main='Protein vs Fat')
+
+# Histogram
+hist(USDA$VitaminC, xlab = 'Vitamin C (mg)', main='Histogram of Vitamin C Levels')
+
+# histogram with xlim
+hist(USDA$VitaminC, xlab = 'Vitamin C (mg)', main='Histogram of Vitamin C Levels', xlim=c(0, 100))
+
+# Histogram with breaks
+hist(USDA$VitaminC, xlab = 'Vitamin C (mg)', main='Histogram of Vitamin C Levels', xlim=c(0, 100), breaks=100)
+hist(USDA$VitaminC, xlab = 'Vitamin C (mg)', main='Histogram of Vitamin C Levels', xlim=c(0, 100), breaks=2000)
+
+# Boxplot
+boxplot(USDA$Sugar, main='Boxplot of Sugar Levels', ylab='Sugar (g)')
