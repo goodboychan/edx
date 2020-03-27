@@ -3,8 +3,9 @@
 #install.packages('perm')
 library(perm)
 library(np)
+library(ggplot2)
 rm(list = ls())
-setwd("")
+setwd("./edx/MIT-14.310x/Module7-Causality.Analyzing.Randomized.Experiments.Nonparametric.Regression/")
 
 # Questions 1 - 4
 #-------------------------------------------------
@@ -71,3 +72,10 @@ print(actual_stat+1.96*sqrt(Vneyman))
 attach(schools)
 plot <-npreg(xdat=schools$open, ydat= schools$pctpostwritten, bws=0.04,bandwidth.compute=FALSE)
 plot(plot)
+
+open_treatment <- subset(schools, treatment==1)
+open_control <- subset(schools, control==1)
+
+ggplot(schools) + 
+  stat_ecdf(data=open_treatment, aes(open_treatment$open), color="blue")+ 
+  stat_ecdf(data=open_control, aes(open_control$open), color="red" )
