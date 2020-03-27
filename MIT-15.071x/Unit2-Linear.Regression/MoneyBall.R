@@ -18,3 +18,6 @@ plot(moneyball$RD, moneyball$W)
 # Create lm model
 WinsReg = lm(W ~ RD, data=moneyball)
 summary(WinsReg)
+
+# for the question
+(713 - 614)*0.105766 + 80.881375
