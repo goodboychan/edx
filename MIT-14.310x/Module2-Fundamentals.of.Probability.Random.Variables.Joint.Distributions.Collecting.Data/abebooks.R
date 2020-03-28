@@ -1,0 +1,6 @@
+library(rvest)
+larecherche <- read_html("https://www.abebooks.com/servlet/SearchResults?pt=book&sortby=17&tn=a+la+recherche+du+temps+perdu&an=proust&cm_sp=pan-_-srp-_-ptbook")
+titlehtml <- html_nodes(larecherche, ".col-xs-8 a span")
+titletext <-html_text(titlehtml)
+pricehtml<-html_nodes(larecherche, ".item-price .price")
+pricetext<-html_text(pricehtml)
