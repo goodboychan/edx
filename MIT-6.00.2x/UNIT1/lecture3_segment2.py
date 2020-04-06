@@ -82,4 +82,4 @@ def buildCityGraph(graphType):
     g.addEdge(Edge(g.getNode('Los Angeles'), g.getNode('Boston')))
     return g
     
-print(buildCityGraph(Graph))
+# print(buildCityGraph(Graph))
