@@ -54,19 +54,37 @@ def greedy_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    cows_sorted = {k: v for k, v in sorted(cows.items(), key=lambda item: item[1], reverse=True)}
-    spaceships = []
+    # Previously, I implemented it with dictionary sort. It works fine in py3.6+.
+    # cows_sorted = {k: v for k, v in sorted(cows.items(), key=lambda item: item[1], reverse=True)}
+    # spaceships = []
     
+    # while len(cows_sorted) != 0:
+    #     spaceship = []
+    #     spaceshipWeight = 0.0
+    #     for k in cows_sorted.keys():
+    #         if spaceshipWeight + cows_sorted[k] <= limit:
+    #             spaceship.append(k)
+    #             spaceshipWeight += cows_sorted[k]
+    #     for e in spaceship:
+    #         del cows_sorted[e]
+    #     spaceships.append(spaceship)
+    
+    # return spaceships
+
+    # But in py3.5, it needs to consider dictionary ordering
+    cows_sorted = sorted(cows.items(), key=lambda item: item[1], reverse=True)
+    spaceships = []
     while len(cows_sorted) != 0:
         spaceship = []
+        remove_list = []
         spaceshipWeight = 0.0
-        for k in cows_sorted.keys():
-            if spaceshipWeight + cows_sorted[k] <= limit:
-                spaceship.append(k)
-                spaceshipWeight += cows_sorted[k]
-        for e in spaceship:
-            del cows_sorted[e]
+        for i in range(len(cows_sorted)):
+            if spaceshipWeight + cows_sorted[i][1] <= limit:
+                spaceship.append(cows_sorted[i][0])
+                spaceshipWeight += cows_sorted[i][1]
+                remove_list.append(i)        
+        for j in sorted(remove_list, reverse=True):
+            cows_sorted.pop(j)
         spaceships.append(spaceship)
     
     return spaceships
@@ -129,14 +147,8 @@ print(cows)
 # print(brute_force_cow_transport(cows, limit))
 
 # Test 1
-# print(greedy_cow_transport({'Polaris': 20, 'Horns': 50, 'Patches': 60, 'Muscles': 65, 'Lotus': 10, 'MooMoo': 85, 'Milkshake': 75, 'Clover': 5, 'Louis': 45, 'Miss Bella': 15}, 100))'
+print(greedy_cow_transport({'MooMoo': 85, 'Louis': 45, 'Clover': 5, 'Miss Bella': 15, 'Muscles': 65, 'Milkshake': 75, 'Patches': 60, 'Horns': 50, 'Polaris': 20, 'Lotus': 10}, 100))
 # Test 2
-# print(greedy_cow_transport({'Abby': 38, 'Betsy': 65, 'Rose': 50, 'Patches': 12, 'Coco': 10, 'Buttercup': 72, 'Dottie': 85, 'Daisy': 50, 'Lilly': 24, 'Willow': 35}, 100))
+print(greedy_cow_transport({'Coco': 10, 'Rose': 50, 'Buttercup': 72, 'Betsy': 65, 'Daisy': 50, 'Patches': 12, 'Abby': 38, 'Lilly': 24, 'Willow': 35, 'Dottie': 85}, 100))
 # Test 3
-# print(greedy_cow_transport({'Abby': 28, 'Starlight': 54, 'Betsy': 39, 'Rose': 42, 'Coco': 59, 'Buttercup': 11, 'Luna': 41, 'Willow': 59}, 120))
-
-# print(greedy_cow_transport({'Betsy': 39, 'Starlight': 54, 'Abby': 28, 'Coco': 59, 'Buttercup': 11, 'Luna': 41, 'Willow': 59, 'Rose': 42}, 120))
-
-print(greedy_cow_transport({'Horns': 50, 'Lotus': 10, 'Milkshake': 75, 'Clover': 5, 'Muscles': 65, 'Polaris': 20, 'Patches': 60, 'Louis': 45, 'MooMoo': 85, 'Miss Bella': 15}, 100))
-
-print(greedy_cow_transport({"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}, 10))
+print(greedy_cow_transport({'Starlight': 54, 'Rose': 42, 'Buttercup': 11, 'Betsy': 39, 'Abby': 28, 'Luna': 41, 'Willow': 59, 'Coco': 59}, 120))
