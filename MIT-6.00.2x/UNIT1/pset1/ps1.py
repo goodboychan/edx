@@ -112,7 +112,18 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
-    pass
+    for partition in get_partitions(cows):
+        count = 0
+        for i in range(len(partition)):
+            spaceshipWeight = 0.0
+            for j in range(len(partition[i])):
+                spaceshipWeight += cows[partition[i][j]]
+            if spaceshipWeight > limit:
+                break
+            else:
+                count += 1
+        if count == len(partition):
+            return partition
 
         
 # Problem 3
@@ -144,11 +155,20 @@ limit=10
 print(cows)
 
 # print(greedy_cow_transport(cows, limit))
-# print(brute_force_cow_transport(cows, limit))
+print(brute_force_cow_transport(cows, limit))
 
 # Test 1
-print(greedy_cow_transport({'MooMoo': 85, 'Louis': 45, 'Clover': 5, 'Miss Bella': 15, 'Muscles': 65, 'Milkshake': 75, 'Patches': 60, 'Horns': 50, 'Polaris': 20, 'Lotus': 10}, 100))
+# print(greedy_cow_transport({'MooMoo': 85, 'Louis': 45, 'Clover': 5, 'Miss Bella': 15, 'Muscles': 65, 'Milkshake': 75, 'Patches': 60, 'Horns': 50, 'Polaris': 20, 'Lotus': 10}, 100))
+# # Test 2
+# print(greedy_cow_transport({'Coco': 10, 'Rose': 50, 'Buttercup': 72, 'Betsy': 65, 'Daisy': 50, 'Patches': 12, 'Abby': 38, 'Lilly': 24, 'Willow': 35, 'Dottie': 85}, 100))
+# # Test 3
+# print(greedy_cow_transport({'Starlight': 54, 'Rose': 42, 'Buttercup': 11, 'Betsy': 39, 'Abby': 28, 'Luna': 41, 'Willow': 59, 'Coco': 59}, 120))
+
+# Test 1
+print(brute_force_cow_transport({'Milkshake': 40, 'Miss Bella': 25, 'Lotus': 40, 'Boo': 20, 'Horns': 25, 'MooMoo': 50}, 100))
+
 # Test 2
-print(greedy_cow_transport({'Coco': 10, 'Rose': 50, 'Buttercup': 72, 'Betsy': 65, 'Daisy': 50, 'Patches': 12, 'Abby': 38, 'Lilly': 24, 'Willow': 35, 'Dottie': 85}, 100))
+print(brute_force_cow_transport({'Buttercup': 72, 'Daisy': 50, 'Betsy': 65}, 75))
+
 # Test 3
-print(greedy_cow_transport({'Starlight': 54, 'Rose': 42, 'Buttercup': 11, 'Betsy': 39, 'Abby': 28, 'Luna': 41, 'Willow': 59, 'Coco': 59}, 120))
+print(brute_force_cow_transport({'Starlight': 54, 'Buttercup': 11, 'Luna': 41, 'Betsy': 39}, 145))
