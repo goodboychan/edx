@@ -112,6 +112,7 @@ def brute_force_cow_transport(cows,limit=10):
     trips
     """
     # TODO: Your code here
+    result_list = []
     for partition in get_partitions(cows):
         count = 0
         for i in range(len(partition)):
@@ -123,8 +124,14 @@ def brute_force_cow_transport(cows,limit=10):
             else:
                 count += 1
         if count == len(partition):
-            return partition
-
+            result_list.append(partition)
+    min_length = len(result_list[0])
+    result = result_list[0]
+    for l in result_list:
+        if len(l) <= min_length:
+            min_length = len(l)
+            result = l
+    return result
         
 # Problem 3
 def compare_cow_transport_algorithms():
@@ -140,8 +147,18 @@ def compare_cow_transport_algorithms():
     Returns:
     Does not return anything.
     """
+    cows = load_cows("ps1_cow_data.txt")
+    limit=10
     # TODO: Your code here
-    pass
+    start_time = time.time()
+    greedy_cow_transport(cows, limit)
+    end_time = time.time()
+    print(end_time - start_time)
+
+    start_time = time.time()
+    brute_force_cow_transport(cows, limit)
+    end_time = time.time()
+    print(end_time - start_time)
 
 
 """
@@ -155,7 +172,7 @@ limit=10
 print(cows)
 
 # print(greedy_cow_transport(cows, limit))
-print(brute_force_cow_transport(cows, limit))
+# print(brute_force_cow_transport(cows, limit))
 
 # Test 1
 # print(greedy_cow_transport({'MooMoo': 85, 'Louis': 45, 'Clover': 5, 'Miss Bella': 15, 'Muscles': 65, 'Milkshake': 75, 'Patches': 60, 'Horns': 50, 'Polaris': 20, 'Lotus': 10}, 100))
@@ -165,10 +182,12 @@ print(brute_force_cow_transport(cows, limit))
 # print(greedy_cow_transport({'Starlight': 54, 'Rose': 42, 'Buttercup': 11, 'Betsy': 39, 'Abby': 28, 'Luna': 41, 'Willow': 59, 'Coco': 59}, 120))
 
 # Test 1
-print(brute_force_cow_transport({'Milkshake': 40, 'Miss Bella': 25, 'Lotus': 40, 'Boo': 20, 'Horns': 25, 'MooMoo': 50}, 100))
+# print(brute_force_cow_transport({'Milkshake': 40, 'Miss Bella': 25, 'Lotus': 40, 'Boo': 20, 'Horns': 25, 'MooMoo': 50}, 100))
 
 # Test 2
-print(brute_force_cow_transport({'Buttercup': 72, 'Daisy': 50, 'Betsy': 65}, 75))
+# print(brute_force_cow_transport({'Buttercup': 72, 'Daisy': 50, 'Betsy': 65}, 75))
 
 # Test 3
-print(brute_force_cow_transport({'Starlight': 54, 'Buttercup': 11, 'Luna': 41, 'Betsy': 39}, 145))
+# print(brute_force_cow_transport({'Starlight': 54, 'Buttercup': 11, 'Luna': 41, 'Betsy': 39}, 145))
+
+compare_cow_transport_algorithms()
