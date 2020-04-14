@@ -42,5 +42,5 @@ def fracBoxCars(numTests):
             numBoxCars += 1
     return numBoxCars/numTests
     
-print('Frequency of double 6 =',
-      str(fracBoxCars(100000)*100) + '%')
+# print('Frequency of double 6 =',
+#       str(fracBoxCars(100000)*100) + '%')
