@@ -114,5 +114,5 @@ def simAll(drunkKinds, walkLengths, numTrials):
         drunkTest(walkLengths, numTrials, dClass)
         
 random.seed(0)
-simAll((UsualDrunk, ColdDrunk),
-       (1, 10, 100, 1000, 10000), 100)
+# simAll((UsualDrunk, ColdDrunk),
+#        (1, 10, 100, 1000, 10000), 100)
