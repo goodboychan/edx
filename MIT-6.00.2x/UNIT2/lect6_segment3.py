@@ -213,7 +213,7 @@ def plotLocs(drunkKinds, numSteps, numTrials):
     pylab.legend(loc = 'upper left')
 
 random.seed(0)
-plotLocs((UsualDrunk, ColdDrunk), 10000, 1000)
+# plotLocs((UsualDrunk, ColdDrunk), 10000, 1000)
 
 class OddField(Field):
     def __init__(self, numHoles = 1000,
