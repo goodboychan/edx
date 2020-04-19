@@ -6,6 +6,11 @@ import random
 import ps2_visualize
 import pylab
 
+import os
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+
+import numpy as np
+
 ##################
 ## Comment/uncomment the relevant lines, depending on which version of Python you have
 ##################
@@ -15,9 +20,11 @@ import pylab
 # If you get a "Bad magic number" ImportError, you are not using Python 3.5 
 
 # For Python 3.6:
-from ps2_verify_movement36 import testRobotMovement
+# from ps2_verify_movement36 import testRobotMovement
 # If you get a "Bad magic number" ImportError, you are not using Python 3.6
 
+# For Python 3.7:
+from ps2_verify_movement37 import testRobotMovement
 
 # === Provided class Position
 class Position(object):
