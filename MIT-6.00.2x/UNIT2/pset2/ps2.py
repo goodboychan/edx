@@ -89,7 +89,9 @@ class RectangularRoom(object):
         width: an integer > 0
         height: an integer > 0
         """
-        raise NotImplementedError
+        self.width = width
+        self.height = height
+        self.rect = np.zeros((self.width, self.height))
     
     def cleanTileAtPosition(self, pos):
         """
@@ -99,7 +101,10 @@ class RectangularRoom(object):
 
         pos: a Position
         """
-        raise NotImplementedError
+        x = math.floor(pos.x)
+        y = math.floor(pos.y)
+
+        self.rect[x - 1, y - 1] = 1
 
     def isTileCleaned(self, m, n):
         """
@@ -111,7 +116,7 @@ class RectangularRoom(object):
         n: an integer
         returns: True if (m, n) is cleaned, False otherwise
         """
-        raise NotImplementedError
+        return (self.rect[m - 1, n - 1] == 1)
     
     def getNumTiles(self):
         """
@@ -119,7 +124,7 @@ class RectangularRoom(object):
 
         returns: an integer
         """
-        raise NotImplementedError
+        return self.width * self.height
 
     def getNumCleanedTiles(self):
         """
@@ -127,7 +132,7 @@ class RectangularRoom(object):
 
         returns: an integer
         """
-        raise NotImplementedError
+        return int(sum(sum(self.rect)))
 
     def getRandomPosition(self):
         """
@@ -135,7 +140,7 @@ class RectangularRoom(object):
 
         returns: a Position object.
         """
-        raise NotImplementedError
+        return Position(np.random.randint(0, self.width), np.random.randint(0, self.height))
 
     def isPositionInRoom(self, pos):
         """
@@ -144,7 +149,7 @@ class RectangularRoom(object):
         pos: a Position object.
         returns: True if pos is in the room, False otherwise.
         """
-        raise NotImplementedError
+        return (0 <= pos.x < self.width) and (0 <= pos.y < self.height)
 
 
 # === Problem 2
