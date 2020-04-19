@@ -201,7 +201,7 @@ class Robot(object):
 
         position: a Position object.
         """
-        raise NotImplementedError
+        self.pos = position
 
     def setRobotDirection(self, direction):
         """
@@ -209,7 +209,7 @@ class Robot(object):
 
         direction: integer representing an angle in degrees
         """
-        raise NotImplementedError
+        self.direction = direction
 
     def updatePositionAndClean(self):
         """
@@ -237,11 +237,11 @@ class StandardRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        self.pos = self.pos.getNewPosition(self.direction, self.speed)
 
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-##testRobotMovement(StandardRobot, RectangularRoom)
+testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 4
