@@ -237,11 +237,18 @@ class StandardRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        self.pos = self.pos.getNewPosition(self.direction, self.speed)
+        next_pos = self.getRobotPosition().getNewPosition(self.getRobotDirection(), self.speed)
+        if self.room.isPositionInRoom(next_pos):
+            self.setRobotPosition(next_pos)
+            self.room.cleanTileAtPosition(next_pos)
+        else:
+            self.setRobotDirection(np.random.randint(0, 360))
+            
+        
 
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-testRobotMovement(StandardRobot, RectangularRoom)
+# testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 4
@@ -263,10 +270,24 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    raise NotImplementedError
+    results = []
+    for _ in range(num_trials):
+        anim = ps2_visualize.RobotVisualization(num_robots, width, height)
+        steps = 0
+        room = RectangularRoom(width, height)
+        robots = [robot_type(room, speed) for j in range(num_robots)]
+        while (room.getNumCleanedTiles() / room.getNumTiles()) < min_coverage:
+            steps += 1
+            for r in robots:
+                r.updatePositionAndClean()
+            anim.update(room, robots)
+        results.append(steps)
+    anim.done()
+
+    return np.mean(results)
 
 # Uncomment this line to see how much your simulation takes on average
-##print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
+print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
 
 
 # === Problem 5
