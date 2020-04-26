@@ -65,9 +65,58 @@ def getMeansAndSDs(population, sample, verbose = False):
     return popMean, sampleMean,\
            numpy.std(population), numpy.std(sample)
 
-# random.seed(0)         
+# random.seed(0) 
 # population = getHighs()
-# sample = random.sample(population, 100)
-# getMeansAndSDs(population, sample, True)
+# sampleSize = 200
+# numSamples = 1000
+# maxMeanDiff = 0
+# maxSDDiff = 0
+# sampleMeans = []
+# for i in range(numSamples):
+#     sample = random.sample(population, sampleSize)
+#     popMean, sampleMean, popSD, sampleSD =\
+#        getMeansAndSDs(population, sample, verbose = False)
+#     sampleMeans.append(sampleMean)
+#     if abs(popMean - sampleMean) > maxMeanDiff:
+#         maxMeanDiff = abs(popMean - sampleMean)
+#     if abs(popSD - sampleSD) > maxSDDiff:
+#         maxSDDiff = abs(popSD - sampleSD)
+# print('Mean of sample Means =',
+#       round(sum(sampleMeans)/len(sampleMeans), 3))
+# print('Standard deviation of sample means =',
+#       round(numpy.std(sampleMeans), 3))
+# print('Maximum difference in means =',
+#       round(maxMeanDiff, 3))
+# print('Maximum difference in standard deviations =',
+#       round(maxSDDiff, 3))
+# makeHist(sampleMeans, 'Means of Samples', 'Mean', 'Frequency')
+# pylab.axvline(x = popMean, color = 'r')
 
+def showErrorBars(population, sizes, numTrials):
+    xVals = []
+    sizeMeans, sizeSDs = [], []
+    for sampleSize in sizes:
+        xVals.append(sampleSize)
+        trialMeans = []
+        for t in range(numTrials):
+            sample = random.sample(population, sampleSize)
+            popMean, sampleMean, popSD, sampleSD =\
+               getMeansAndSDs(population, sample)
+            trialMeans.append(sampleMean)
+        sizeMeans.append(sum(trialMeans)/len(trialMeans))
+        sizeSDs.append(numpy.std(trialMeans))
+    pylab.errorbar(xVals, sizeMeans,
+                   yerr = 1.96*pylab.array(sizeSDs), fmt = 'o',
+                   label = '95% Confidence Interval')
+    pylab.title('Mean Temperature ('
+                + str(numTrials) + ' trials)')
+    pylab.xlabel('Sample Size')
+    pylab.ylabel('Mean')
+    pylab.axhline(y = popMean, color ='r', label = 'Population Mean')
+    pylab.xlim(0, sizes[-1] + 10)
+    pylab.legend()
+    pylab.figure()
 
+#population = getHighs()   
+#showErrorBars(population, (50, 100, 200, 300, 400, 500, 600), 50)
+ 

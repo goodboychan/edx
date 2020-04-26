@@ -26,7 +26,6 @@ pylab.rcParams['lines.markersize'] = 10
 #set number of examples shown in legends
 pylab.rcParams['legend.numpoints'] = 1
 
-
 def makeHist(data, title, xlabel, ylabel, bins = 20):
     pylab.hist(data, bins = bins)
     pylab.title(title)
@@ -65,9 +64,29 @@ def getMeansAndSDs(population, sample, verbose = False):
     return popMean, sampleMean,\
            numpy.std(population), numpy.std(sample)
 
-# random.seed(0)         
-# population = getHighs()
-# sample = random.sample(population, 100)
-# getMeansAndSDs(population, sample, True)
+# random.seed(0)
+# temps = getHighs()
+# popMean = sum(temps)/len(temps)
+# sampleSize = 200
+# numTrials = 10000
+# numBad = 0
+# for t in range(numTrials):
+#     sample = random.sample(temps, sampleSize)
+#     sampleMean = sum(sample)/sampleSize
+#     se = numpy.std(sample)/sampleSize**0.5
+#     if abs(popMean - sampleMean) > 1.96*se:
+#         numBad += 1
+# print('Fraction outside 95% confidence interval =',
+#       numBad/numTrials)
 
-
+# for t in range(numTrials):
+#     posStartingPts = range(0, len(temps) - sampleSize)
+#     start = random.choice(posStartingPts)
+#     sample = temps[start:start+sampleSize]
+#     sampleMean = sum(sample)/sampleSize
+#     se = numpy.std(sample)/sampleSize**0.5
+#     if abs(popMean - sampleMean) > 1.96*se:
+#         numBad += 1
+# print('Fraction outside 95% confidence interval =',
+#       numBad/numTrials)
+      
