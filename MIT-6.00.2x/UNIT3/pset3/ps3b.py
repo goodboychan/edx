@@ -4,6 +4,8 @@ import random
 import pylab
 import numpy as np
 
+from ps3b_precompiled_37 import *
+
 ''' 
 Begin helper code
 '''
@@ -186,8 +188,23 @@ def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb,
     numTrials: number of simulation runs to execute (an integer)
     """
 
-    # TODO
+    virus_popHistory = np.zeros(300)
+    for _ in range(numTrials):
+        virus = SimpleVirus(maxBirthProb, clearProb)
+        patient = Patient([virus] * numViruses, maxPop)
+        virus_popHistory_trial = []
+        
+        for _ in range(300):
+            virus_popHistory_trial.append(float(patient.update()))
+        virus_popHistory += virus_popHistory_trial
+    virus_popHistory /= numTrials
 
+    pylab.plot(list(virus_popHistory), label="SimpleVirus")
+    pylab.title("SimpleVirus simulation")
+    pylab.xlabel("Time Steps")
+    pylab.ylabel("Average Virus Population")
+    pylab.legend(loc="best")
+    pylab.show()
 
 
 #
@@ -409,8 +426,13 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
 
     # TODO
 
-virus = SimpleVirus(1.0, 0.0)
-patient = Patient([virus], 100)
+# Problem 1
+# virus = SimpleVirus(1.0, 0.0)
+# patient = Patient([virus], 100)
 
-for i in range(100):
-    patient.update()
+# for i in range(100):
+#     patient.update()
+
+# Problem 2
+# simulationWithoutDrug(numViruses=100, maxPop=1000, maxBirthProb=0.1, clearProb=0.05, numTrials=300)
+simulationWithoutDrug(1, 90, 0.8, 0.1, 1)
