@@ -310,7 +310,19 @@ class ResistantVirus(SimpleVirus):
         NoChildException if this virus particle does not reproduce.
         """
 
-        # TODO
+        for d in activeDrugs:
+            if not self.isResistantTo(d):
+                raise NoChildException()
+
+        if random.random() <= self.maxBirthProb * (1 - popDensity):
+            resistances = self.resistances
+            for d in resistances:
+                if random.random() <= self.mutProb:
+                    resistances[d] = not self.resistances[d]
+
+            return ResistantVirus(self.maxBirthProb, self.clearProb, resistances, self.mutProb)
+        else:
+            raise NoChildException()
 
             
 
