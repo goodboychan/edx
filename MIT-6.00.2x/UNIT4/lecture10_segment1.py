@@ -52,6 +52,6 @@ def plotData(fileName):
                label = 'Measured displacements')
     labelPlot()
     
-plotData('springData.txt')
+# plotData('springData.txt')
 
 
