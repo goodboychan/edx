@@ -4,7 +4,7 @@ import random
 import pylab
 import numpy as np
 
-from ps3b_precompiled_37 import *
+import ps3b_precompiled_37 as ps3
 
 ''' 
 Begin helper code
@@ -199,7 +199,7 @@ def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb,
         virus_popHistory += virus_popHistory_trial
     virus_popHistory /= numTrials
 
-    pylab.plot(list(virus_popHistory), label="SimpleVirus")
+    pylab.plot(virus_popHistory.tolist(), label="SimpleVirus")
     pylab.title("SimpleVirus simulation")
     pylab.xlabel("Time Steps")
     pylab.ylabel("Average Virus Population")
@@ -358,8 +358,8 @@ class TreatedPatient(Patient):
 
         postcondition: The list of drugs being administered to a patient is updated
         """
-
-        self.drugs.append(newDrug)
+        if not newDrug in self.drugs:
+            self.drugs.append(newDrug)
 
 
     def getPrescriptions(self):
@@ -386,8 +386,20 @@ class TreatedPatient(Patient):
         drugs in the drugResist list.
         """
 
+        # TODO
+        virus_survived = len(self.viruses)
         for v in self.viruses:
+            drug_dict = v.getResistances()
             for d in drugResist:
+                if d not in drug_dict:
+                    virus_survived -= 1
+                    continue
+                elif not drug_dict[d]:
+                    virus_survived -= 1
+                    continue
+        if virus_survived < 0:
+            virus_survived = 0
+        return virus_survived
                 
 
 
@@ -412,7 +424,18 @@ class TreatedPatient(Patient):
         integer)
         """
 
-        # TODO
+        for virus in self.viruses[:]:
+            if virus.doesClear():
+                self.viruses.remove(virus)
+        
+        self.popDensity = self.getTotalPop() / float(self.getMaxPop())
+        if self.popDensity <= 1:
+            for virus in self.viruses[:]:
+                try:
+                    self.viruses.append(virus.reproduce(self.popDensity, self.drugs))
+                except NoChildException:
+                    pass
+        return self.getTotalPop()
 
 
 
@@ -441,16 +464,29 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     numTrials: number of simulation runs to execute (an integer)
     
     """
-
-    # TODO
-
-# Problem 1
-# virus = SimpleVirus(1.0, 0.0)
-# patient = Patient([virus], 100)
-
-# for i in range(100):
-#     patient.update()
-
-# Problem 2
-# simulationWithoutDrug(numViruses=100, maxPop=1000, maxBirthProb=0.1, clearProb=0.05, numTrials=300)
-simulationWithoutDrug(1, 90, 0.8, 0.1, 1)
+    
+    virus_popHistory = np.zeros(300)
+    virus_res_popHistory = np.zeros(300)
+    for _ in range(numTrials):
+        virus = ResistantVirus(maxBirthProb, clearProb, resistances, mutProb)
+        patient = TreatedPatient([virus] * numViruses, maxPop)
+        virus_popHistory_trial = []
+        virus_res_popHistory_trial = []
+        for i in range(300):
+            if i == 150:
+                patient.addPrescription("guttagonol")
+            patient.update()
+            virus_popHistory_trial.append(patient.getTotalPop())
+            virus_res_popHistory_trial.append(patient.getResistPop(["guttagonol"]))
+        virus_popHistory += virus_popHistory_trial
+        virus_res_popHistory += virus_res_popHistory_trial
+    virus_popHistory = np.around(virus_popHistory / numTrials, 2)
+    virus_res_popHistory = np.around(virus_res_popHistory / numTrials, 2)
+    pylab.plot(virus_popHistory.tolist(), label="Total")
+    pylab.plot(virus_res_popHistory.tolist(), label="ResistantVirus")
+    pylab.title("ResistantVirus simulation")
+    pylab.xlabel("time Steps")
+    pylab.ylabel("# viruses")
+    pylab.legend(loc="best")
+    pylab.show()
+    
