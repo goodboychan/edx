@@ -52,7 +52,7 @@ class Climate(object):
         for line in f:
             items = line.strip().split(',')
 
-            date = re.match('(\d\d\d\d)(\d\d)(\d\d)', items[header.index('DATE')])
+            date = re.match(r'(\d\d\d\d)(\d\d)(\d\d)', items[header.index('DATE')])
             year = int(date.group(1))
             month = int(date.group(2))
             day = int(date.group(3))
@@ -177,7 +177,15 @@ def evaluate_models_on_training(x, y, models):
         None
     """
     # TODO
-    pass
+    pylab.plot(x, y, 'o', color='blue', label='Data')
+    r_2s = []
+    for model in models:
+        estimated = pylab.polyval(model, x)
+        pylab.plot(x, estimated, color='red', label='Fit')
+        r_2s.append(r_squared(y, estimated))
+    pylab.title('model: {} \n r_squared: {}'.format(model, r_2s[-1]))
+    pylab.legend(loc='best')
+    pylab.show()
 
 
 ### Begining of program
@@ -191,14 +199,16 @@ for year in INTERVAL_1:
 models = generate_models(x, y, [1])
 evaluate_models_on_training(x, y, models)
 
-
 # Problem 4: FILL IN MISSING CODE TO GENERATE y VALUES
 x1 = INTERVAL_1
 x2 = INTERVAL_2
 y = []
-# MISSING LINES
+
+for year in INTERVAL_1:
+    y.append(np.mean(raw_data.get_yearly_temp('BOSTON', year)))
+
 models = generate_models(x, y, [1])    
 evaluate_models_on_training(x, y, models)
 
 # Test for Problem 1
-# print(generate_models([1961, 1962, 1963],[4.4,5.5,6.6],[1, 2]))
+print(generate_models([1961, 1962, 1963],[4.4,5.5,6.6],[1, 2]))
