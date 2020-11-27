@@ -525,3 +525,6 @@ IVADO-DL101/hymenoptera_data/val/bees/72100438_73de9f17af.jpg
 IVADO-DL101/hymenoptera_data/val/bees/759745145_e8bc776ec8.jpg
 IVADO-DL101/hymenoptera_data/val/bees/936182217_c4caa5222d.jpg
 IVADO-DL101/hymenoptera_data/val/bees/abeja.jpg
+**/dataset/bean-disease/**
+**/dataset/horse-or-human/**
+**/dataset/validation-horse-or-human/**
