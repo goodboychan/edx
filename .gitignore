@@ -528,3 +528,4 @@ IVADO-DL101/hymenoptera_data/val/bees/abeja.jpg
 **/dataset/bean-disease/**
 **/dataset/horse-or-human/**
 **/dataset/validation-horse-or-human/**
+**/Harvard-TinyML2/dataset/*.wav
