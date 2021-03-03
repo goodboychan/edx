@@ -1,0 +1,16 @@
+
+
+Description of the information contained in the .csv files:
+
+
+   golub: matrix of gene expression levels for the 38 tumor mRNA
+          samples, rows correspond to genes (3051 genes) and columns to
+          mRNA samples.
+
+golub_cl: numeric vector indicating the tumor class, 27 acute
+          lymphoblastic leukemia (ALL) cases (code 0) and 11 acute
+          myeloid leukemia (AML) cases (code 1).
+
+golub_gnames: a matrix containing the names of the 3051 genes for the
+          expression matrix ‘golub’. The three columns correspond to
+          the gene ‘index’, ‘ID’, and ‘Name’, respectively.
